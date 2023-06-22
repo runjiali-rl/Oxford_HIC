@@ -29,7 +29,11 @@ Through explainability analysis of the trained models, we identify the visual an
 
 ![overview](figs/overview.png)
 
-## Getting Started
+## Dataset download
+
+## Model: MiniGPT4
+
+## Model: CLIPCap
 ### Installation
 
 **1. Prepare the code and the environment**
@@ -38,11 +42,27 @@ Git clone our repository, create a Python environment and activate it via the fo
 
 ```bash
 git clone git@github.com:liguang0115/Oxford_HIC.git
-cd Oxford_HIC
+cd Oxford_HIC/clipcap
 conda env create -f environment.yml
 conda activate humor
 ```
 
 
 
-**2. Download the Oxford HIC dataset**
+**2. Process the Oxford HIC dataset**
+CLIPCap encode images with CLIP and save visual features to speed up training.
+
+```
+python clipcap/parse_humor.py --data_path YOUR_RAW_DATA_PATH --output_dir YOUR_DATA_SAVE_DIR --use_cuda
+```
+The output processed dataset will be in a pkl file.
+
+
+**3. Training the model**
+
+Train the model with distributed system on your machine by running
+
+```
+torchrun --nproc_per_node=NUM_GPUS train.py --data YOUR_DATA_SAVE_DIR --out_dir CKPT_OUTPUT_DIR --epochs EPOCH --bs BATCH_SIZE --lr LEAR
+
+```
