@@ -12,15 +12,20 @@ import sys
 import argparse
 import json
 from typing import Tuple, Optional, Union
+import torch.distributed as dist
+from torch.utils.data.distributed import DistributedSampler
+from random import random
 from model.clipcap import *
-from dataset.hic import *
+from dataset.hic import HumorDataset
+from loss.PCloss import PCloss
 
+
+EPSILON = 1e-9
 
 
 def train(dataset: HumorDataset, model: ClipCaptionModel, args,
           lr: float = 2e-5, warmup_steps: int = 5000, output_dir: str = "./checkpoints_mlp", output_prefix: str = ""):
 
-    device = torch.device('cuda:2')
     batch_size = args.bs
     epochs = args.epochs
     if not os.path.exists(output_dir):
@@ -53,7 +58,10 @@ def train(dataset: HumorDataset, model: ClipCaptionModel, args,
             tokens, mask, prefix = tokens.cuda(), mask.cuda(), prefix.to(dtype=torch.float32).cuda()
             outputs = model(tokens, prefix, mask)
             logits = outputs[:, dataset.prefix_length - 1: -1]
-            loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
+            if args.pcloss:
+                loss = PCloss(logits, tokens, use_ce=args.use_ce)
+            else:
+                loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
             loss.backward()
             optimizer.step()
             scheduler.step()
@@ -65,7 +73,7 @@ def train(dataset: HumorDataset, model: ClipCaptionModel, args,
 
     model_without_ddp = model.module
 
-    torch.save(model_without_ddp.state_dict(), 'clipcap_humor_demo1.pth')
+    torch.save(model_without_ddp.state_dict(), outdir)
 
     return model
 
@@ -91,10 +99,10 @@ def init_distributed():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', default='humor_ViT-B_32_single_demo.pkl')
+    parser.add_argument('--data', default='/homes/55/runjia/storage/humor_ViT-B_32_single_demo.pkl')
     parser.add_argument('--out_dir', default='./checkpoints_mlp')  
     parser.add_argument('--prefix', default='bokete_prefix', help='prefix for saved filenames')
-    parser.add_argument('--epochs', type=int, default=360)
+    parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--prefix_length', type=int, default=10)
     parser.add_argument('--prefix_length_clip', type=int, default=10)
     parser.add_argument('--bs', type=int, default=8)
@@ -103,6 +111,7 @@ def main():
     parser.add_argument('--is_rn', dest='is_rn', action='store_true')
     parser.add_argument('--normalize_prefix', dest='normalize_prefix', action='store_true')
     parser.add_argument('--lr', type=float, default=2e-5)
+    parser.add_argument('--is_rn', dest='pcloss', action='store_false')
 
     args = parser.parse_args()
 
@@ -119,7 +128,7 @@ def main():
         model = ClipCaptionModel(prefix_length, clip_length=args.prefix_length_clip, prefix_size=prefix_dim,
                                   num_layers=args.num_layers, mapping_type=MappingType.MLP)
         print("Train both prefix and GPT")
-        sys.stdout.flush()
+    sys.stdout.flush()
     train(dataset,  model, args, output_dir=args.out_dir, output_prefix=args.prefix,
           lr=args.lr)
 

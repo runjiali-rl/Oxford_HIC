@@ -269,34 +269,6 @@ class ClipCaptionPrefix(ClipCaptionModel):
         return self
 
 
-def save_config(args: argparse.Namespace):
-    config = {}
-    for key, item in args._get_kwargs():
-        config[key] = item
-    out_path = os.path.join(args.out_dir, f"{args.prefix}.json")
-    with open(out_path, 'w') as outfile:
-        json.dump(config, outfile)
-
-
-def load_model(config_path: str, epoch_or_latest: Union[str, int] = '_latest'):
-    with open(config_path) as f:
-        config = json.load(f)
-    parser = argparse.ArgumentParser()
-    parser.set_defaults(**config)
-    args = parser.parse_args()
-    if type(epoch_or_latest) is int:
-        epoch_or_latest = f"-{epoch_or_latest:03d}"
-    model_path = os.path.join(args.out_dir, f"{args.prefix}{epoch_or_latest}.pt")
-    if args.only_prefix:
-        model = ClipCaptionPrefix(args.prefix_length)
-    else:
-        model = ClipCaptionModel(args.prefix_length)
-    if os.path.isfile(model_path):
-        print(f"loading model from {model_path}")
-        model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-    else:
-        print(f"{model_path} is not exist")
-    return model, parser
 
 
 def train(dataset: HumorDataset, model: ClipCaptionModel, args,
@@ -396,7 +368,7 @@ def init_distributed():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', default='humor_ViT-B_32_single_demo.pkl')
+    parser.add_argument('--data', default='~/storage/humor_ViT-B_32_single_demo.pkl')
     parser.add_argument('--out_dir', default='./checkpoints_mlp')
     parser.add_argument('--model_dir', default='./mlp_coco_weights.pt')    
     parser.add_argument('--prefix', default='bokete_prefix', help='prefix for saved filenames')

@@ -43,63 +43,6 @@ WEIGHTS_PATHS = {
 D = torch.device
 CPU = torch.device("cpu")
 
-#
-# class Predictor(cog.Predictor):
-#     def setup(self):
-#         """Load the model into memory to make running multiple predictions efficient"""
-#         self.device = torch.device("cuda")
-#         self.clip_model, self.preprocess = clip.load(
-#             "ViT-B/32", device=self.device, jit=False
-#         )
-#         self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-#
-#         self.models = {}
-#         self.prefix_length = 10
-#         for key, weights_path in WEIGHTS_PATHS.items():
-#             model = ClipCaptionModel(self.prefix_length)
-#             model.load_state_dict(torch.load(weights_path, map_location=CPU))
-#             model = model.eval()
-#             model = model.to(self.device)
-#             self.models[key] = model
-#
-#     @cog.input("image", type=cog.Path, help="Input image")
-#     @cog.input(
-#         "model",
-#         type=str,
-#         options=WEIGHTS_PATHS.keys(),
-#         default="coco",
-#         help="Model to use",
-#     )
-#     @cog.input(
-#         "use_beam_search",
-#         type=bool,
-#         default=False,
-#         help="Whether to apply beam search to generate the output text",
-#     )
-#     def predict(self, image, model, use_beam_search):
-#         """Run a single prediction on the model"""
-#         self.device = torch.device("cuda")
-#         self.clip_model, self.preprocess = clip.load(
-#             "ViT-B/32", device=self.device, jit=False
-#         )
-#         self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-#
-#         self.models = {}
-#         self.prefix_length = 10
-#         image = io.imread(image)
-#         model = self.models[model]
-#         pil_image = PIL.Image.fromarray(image)
-#         image = self.preprocess(pil_image).unsqueeze(0).to(self.device)
-#         with torch.no_grad():
-#             prefix = self.clip_model.encode_image(image).to(
-#                 self.device, dtype=torch.float32
-#             )
-#             prefix_embed = model.clip_project(prefix).reshape(1, self.prefix_length, -1)
-#         if use_beam_search:
-#             return generate_beam(model, self.tokenizer, embed=prefix_embed)[0]
-#         else:
-#             return generate2(model, self.tokenizer, embed=prefix_embed)
-
 
 class MLP(nn.Module):
     def forward(self, x: T) -> T:
