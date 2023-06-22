@@ -10,12 +10,20 @@ import argparse
 import pandas as pd
 
 
-def main(clip_model_type: str):
-    device = torch.device('cuda:2')
+def main(args):
+    clip_model_type = args.clip_model_type
+    data_path = args.data_path
+    output_dir = args.output_dir
+
+    if args.use_cuda:
+        device = torch.device('cuda')
+    else:
+        device = torch.device('cpu')
+
     clip_model_name = clip_model_type.replace('/', '_')
-    out_path = f"./humor_{clip_model_name}_single_demo.pkl"
+    out_path = f"{output_dir}/humor_{clip_model_name}_single_demo.pkl"
     clip_model, preprocess = clip.load(clip_model_type, device=device, jit=False)
-    data = pd.read_csv('../humor_single_demo.csv')
+    data = pd.read_csv(data_path)
     print("%0d captions loaded from csv " % len(data))
     all_embeddings = []
     all_captions = []
@@ -52,5 +60,8 @@ def main(clip_model_type: str):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--clip_model_type', default="ViT-B/32", choices=('RN50', 'RN101', 'RN50x4', 'ViT-B/32'))
+    parser.add_argument('--data_path', default="ViT-B/32")
+    parser.add_argument('--output_dir', default="ViT-B/32")
+    parser.add_argument('--use_cuda', dest='use_cuda', action='store_true')
     args = parser.parse_args()
-    exit(main(args.clip_model_type))
+    exit(main(args))
