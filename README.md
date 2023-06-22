@@ -19,11 +19,11 @@ Click the image to chat with models trained on Oxford HIC around your images
 
 
 ## Introduction
-This paper presents \dataname, a large-scale dataset for humour generation and understanding. Humour is an abstract, subjective, and context-dependent cognitive construct involving several cognitive factors, making it a challenging task to generate and interpret. Hence, humour generation and understanding can serve as a new task for evaluating the ability of deep-learning methods to process abstract and subjective information.
+This paper presents Oxford HIC, a large-scale dataset for humour generation and understanding. Humour is an abstract, subjective, and context-dependent cognitive construct involving several cognitive factors, making it a challenging task to generate and interpret. Hence, humour generation and understanding can serve as a new task for evaluating the ability of deep-learning methods to process abstract and subjective information.
 Due to the scarcity of data, humour-related generation tasks such as captioning remain under-explored.
-To address this gap, \dname~offers approximately 2.9M image-text pairs with humour scores to train a generalizable humour captioning model.
-Contrary to existing captioning datasets, \dname~features a wide range of emotional and semantic diversity resulting in out-of-context examples that are particularly conducive to generating humour. Moreover, \dname~is curated devoid of offensive content.
-We also show how \dname~can be leveraged for evaluating the humour of a generated text. 
+To address this gap, Oxford HIC offers approximately 2.9M image-text pairs with humour scores to train a generalizable humour captioning model.
+Contrary to existing captioning datasets, Oxford HIC features a wide range of emotional and semantic diversity resulting in out-of-context examples that are particularly conducive to generating humour. Moreover, Oxford HIC is curated devoid of offensive content.
+We also show how Oxford HIC can be leveraged for evaluating the humour of a generated text. 
 Through explainability analysis of the trained models, we identify the visual and linguistic cues influential for evoking humour prediction (and generation). We observe qualitatively that these cues are aligned with the benign violation theory of humour in cognitive psychology.
 
 
