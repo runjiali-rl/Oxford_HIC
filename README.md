@@ -31,6 +31,14 @@ Through explainability analysis of the trained models, we identify the visual an
 
 ## Dataset download
 
+## Demo weight download
+Download the pretrained checkpoints on MiniGPT4 and CLIPCap
+
+|                                MiniGPT4                                |                               CLIPCap                              |
+:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:
+ [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) 
+
+
 ## Model: MiniGPT4
 
 ## Model: CLIPCap
