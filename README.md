@@ -50,6 +50,7 @@ conda activate humor
 
 
 **2. Process the Oxford HIC dataset**
+
 CLIPCap encode images with CLIP and save visual features to speed up training.
 
 ```
@@ -64,5 +65,4 @@ Train the model with distributed system on your machine by running
 
 ```
 torchrun --nproc_per_node=NUM_GPUS train.py --data YOUR_DATA_SAVE_DIR --out_dir CKPT_OUTPUT_DIR --epochs EPOCH --bs BATCH_SIZE --lr LEAR
-
 ```
