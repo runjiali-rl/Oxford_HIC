@@ -36,7 +36,7 @@ Download the pretrained checkpoints on MiniGPT4 and CLIPCap
 
 |                                MiniGPT4                                |                               CLIPCap                              |
 :------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:
- [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) 
+ [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1lwI3T81QtbVtIcJ7jsRxdxBI1bh_4wy7/view?usp=sharing) 
 
 
 ## Model: MiniGPT4
