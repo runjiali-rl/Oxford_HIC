@@ -334,7 +334,7 @@ class LogitsProcessorList(list):
         return scores
 
 
-def predict(image, model, use_beam_search):
+def predict(image, model，prompt=None, args):
     """Run a single prediction on the model"""
     device = torch.device("cuda:2")
     clip_model, preprocess = clip.load(
@@ -405,31 +405,48 @@ def predict(image, model, use_beam_search):
             begin_suppress_tokens=None,
             forced_decoder_ids=None,
         )
+    if prompt is not None:
+        prompt_input_ids = tokenizer(prompt, return_tensors='pt').input_ids
+        prompt_embedding = model.gpt2.transformer.wte(prompt_input_ids.to(device))
+        prefix_embed = torch.cat((prefix_embed, prompt_embedding), dim=1)
     outputs = model.gpt2.greedy_search(
         input_ids.to(device), inputs_embeds=prefix_embed.to(device),
         stopping_criteria=stopping_criteria, pad_token_id=model.gpt2.config.eos_token_id,
         logits_processor=logits_processor
     )
-    result = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    if prompt is not None:
+        result = prompt + tokenizer.decode(outputs[0], skip_special_tokens=True)
+    else:
+        result = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return result
 
 
 
-def main(model_path, image_id_path, save_path):
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_path', default=None)
+    parser.add_argument('--prompt', default=None)  
+    parser.add_argument('--image_path', default=None)
+    parser.add_argument('--save_path', default=None)
+    parser.add_argument('--use_cuda', dest='pcloss', action='store_true')
+
+    args = parser.parse_args()
     image_ids = np.load(image_id_path)
     model = ClipCaptionModel(prefix_length=10)
     model.load_state_dict(torch.load(model_path))
-    model = model.to(torch.device('cuda:2'))
+    model = model.to(torch.device('cuda'))
 
     predicted_caption = {
         'image_id': [],
         'caption': []
     }
+    image_path = args.image_path
 
-    for image_id in tqdm(image_ids):
-        image_path = '../datasets/images'
-        image = os.path.join(image_path, f'{image_id}.jpg')
-        result = predict(image, model, use_beam_search=False)
+    for image_id in os.listdir():
+        
+        image = os.path.join(image_path, image_id)
+        result = predict(image, model)
 
         predicted_caption['image_id'].append(image_id)
         predicted_caption['caption'].append(result)
@@ -440,7 +457,4 @@ def main(model_path, image_id_path, save_path):
 
 
 if __name__ == '__main__':
-    model_path = '/data6/storage/kevinsun/runjiali/clipcap_humor_old_loss_100_epoch.pth'
-    save_path = 'clipcap_humor_output_old_loss_100epoch.csv'
-    image_id_path = '../datasets/out_val_ids.npy'
-    main(model_path, image_id_path, save_path)
+    main()

@@ -19,6 +19,7 @@ import cog
 import pandas as pd
 import inspect
 from model.clipcap import *
+import argparse
 
 # import torch
 
@@ -270,9 +271,10 @@ class LogitsProcessorList(list):
                 scores = processor(input_ids, scores)
         return scores
 
-def predict(image, model, prompt=None):
+def predict(image, model, prompt=None, args):
     """Run a single prediction on the model"""
-    device = torch.device("cuda:2")
+    if args.use_cuda:
+        device = torch.device("cuda")
     clip_model, preprocess = clip.load(
         "ViT-B/32", device=device, jit=False
     )
@@ -356,19 +358,23 @@ def predict(image, model, prompt=None):
         print("\ngreedy + inputs_embeds:", tokenizer.decode(outputs[0], skip_special_tokens=True))
 
 
-def main(model_path):
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_path', default=None)
+    parser.add_argument('--prompt', default=None)  
+    parser.add_argument('--image_path', default=None)
 
+    args = parser.parse_args()
+
+
+    model_path = args.model_path
     model = ClipCaptionModel(prefix_length=10)
     model.load_state_dict(torch.load(model_path))
-    model = model.to(torch.device('cuda:2'))
-
-    image = '../images/dog_demo.jpg'
+    image = args.image_path
     predict(image, model)
 
 
 
 if __name__ == '__main__':
-    model_path = 'clipcap_humor_demo1.pth'
-    save_path = 'clipcap_humor_mask_in_val_output.csv'
-    image_id_path = '../datasets/in_val_ids.npy'
-    main(model_path)
+
+    main()
