@@ -271,10 +271,12 @@ class LogitsProcessorList(list):
                 scores = processor(input_ids, scores)
         return scores
 
-def predict(image, model, prompt=None, args):
+def predict(image, model, args, prompt=None):
     """Run a single prediction on the model"""
     if args.use_cuda:
         device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
     clip_model, preprocess = clip.load(
         "ViT-B/32", device=device, jit=False
     )
@@ -351,7 +353,6 @@ def predict(image, model, prompt=None, args):
         stopping_criteria=stopping_criteria, pad_token_id=model.gpt2.config.eos_token_id,
         logits_processor=logits_processor
     )
-    print(outputs)
     if prompt is not None:
         print("\ngreedy + inputs_embeds:", prompt, tokenizer.decode(outputs[0], skip_special_tokens=True))
     else:
@@ -363,6 +364,7 @@ def main():
     parser.add_argument('--model_path', default=None)
     parser.add_argument('--prompt', default=None)  
     parser.add_argument('--image_path', default=None)
+    parser.add_argument('--use_cuda', dest='use_cuda', action='store_true')
 
     args = parser.parse_args()
 
@@ -370,8 +372,11 @@ def main():
     model_path = args.model_path
     model = ClipCaptionModel(prefix_length=10)
     model.load_state_dict(torch.load(model_path))
+    if args.use_cuda:
+        model = model.to(torch.device('cuda'))
+
     image = args.image_path
-    predict(image, model)
+    predict(image, model, args)
 
 
 
