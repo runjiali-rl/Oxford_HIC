@@ -111,7 +111,7 @@ def main():
     parser.add_argument('--is_rn', dest='is_rn', action='store_true')
     parser.add_argument('--normalize_prefix', dest='normalize_prefix', action='store_true')
     parser.add_argument('--lr', type=float, default=2e-5)
-    parser.add_argument('--is_rn', dest='pcloss', action='store_false')
+    parser.add_argument('--pcloss', dest='pcloss', action='store_false')
 
     args = parser.parse_args()
 

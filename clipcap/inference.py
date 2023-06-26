@@ -18,6 +18,7 @@ from tqdm import tqdm
 import cog
 import pandas as pd
 import inspect
+from model.clipcap import *
 
 # import torch
 
@@ -42,68 +43,6 @@ WEIGHTS_PATHS = {
 
 D = torch.device
 CPU = torch.device("cpu")
-
-
-class MLP(nn.Module):
-    def forward(self, x: T) -> T:
-        return self.model(x)
-
-    def __init__(self, sizes: Tuple[int, ...], bias=True, act=nn.Tanh):
-        super(MLP, self).__init__()
-        layers = []
-        for i in range(len(sizes) - 1):
-            layers.append(nn.Linear(sizes[i], sizes[i + 1], bias=bias))
-            if i < len(sizes) - 2:
-                layers.append(act())
-        self.model = nn.Sequential(*layers)
-
-
-class ClipCaptionModel(nn.Module):
-    def get_dummy_token(self, batch_size: int, device: torch.device) -> torch.Tensor:
-        return torch.zeros(batch_size, self.prefix_length, dtype=torch.int64, device=device)
-
-    def forward(self, tokens: torch.Tensor, prefix: torch.Tensor, mask: Optional[torch.Tensor] = None,
-                labels: Optional[torch.Tensor] = None):
-        embedding_text = self.gpt2.transformer.wte(tokens)
-        prefix_projections = self.clip_project(prefix).view(-1, self.prefix_length, self.gpt_embedding_size)
-        embedding_cat = torch.cat((prefix_projections, embedding_text), dim=1)
-        if labels is not None:
-            dummy_token = self.get_dummy_token(tokens.shape[0], tokens.device)
-            labels = torch.cat((dummy_token, tokens), dim=1)
-        out = self.gpt2(inputs_embeds=embedding_cat, labels=labels, attention_mask=mask)
-        out = self.scale.exp() * out.logits
-        return out
-
-    def __init__(self, prefix_length: int, prefix_size: int = 512):
-        super(ClipCaptionModel, self).__init__()
-        self.prefix_length = prefix_length
-        self.gpt2 = GPT2LMHeadModel.from_pretrained('gpt2')
-        self.gpt_embedding_size = self.gpt2.transformer.wte.weight.shape[1]
-        self.scale = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))
-        if prefix_length > 10:  # not enough memory
-            self.clip_project = nn.Linear(
-                prefix_size, self.gpt_embedding_size * prefix_length
-            )
-        else:
-            self.clip_project = MLP(
-                (
-                    prefix_size,
-                    (self.gpt_embedding_size * prefix_length) // 2,
-                    self.gpt_embedding_size * prefix_length,
-                )
-            )
-
-
-class ClipCaptionPrefix(ClipCaptionModel):
-    def parameters(self, recurse: bool = True):
-        return self.clip_project.parameters()
-
-    def train(self, mode: bool = True):
-        super(ClipCaptionPrefix, self).train(mode)
-        for param in self.gpt2.parameters():
-            param.requires_grad = False
-        # self.gpt.eval()
-        return self
 
 
 def generate_beam(
@@ -423,12 +362,9 @@ def main(model_path):
     model.load_state_dict(torch.load(model_path))
     model = model.to(torch.device('cuda:2'))
 
-    # image_id = 'wisdom-cat'
-    # image_path = '../datasets/images'
-    # image = os.path.join(image_path, f'{image_id}.jpg')
     image = '../images/dog_demo.jpg'
     predict(image, model)
-    # print(result)
+
 
 
 if __name__ == '__main__':
