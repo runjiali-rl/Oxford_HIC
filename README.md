@@ -80,7 +80,7 @@ vicuna_weights
 ```
 
 Then, set the path to the vicuna weight in the model config file 
-[here](minigpt4/configs/models/minigpt4.yaml#L16) at Line 16.
+[here](minigpt4/minigpt4/configs/models/minigpt4.yaml) at Line 16.
 
 
 **3. Prepare the pre-trained MiniGPT-4 checkpoint**
