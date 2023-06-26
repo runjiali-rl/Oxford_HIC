@@ -44,9 +44,40 @@ Download the pre-trained checkpoints on MiniGPT4 and CLIPCap
 We recommend trying MiniGPT4 first since it has quite a strong abstract understanding ability derived from its Large Language Model decoder (Vicuna), which facilitates humour generation and understanding.
 
 ## Model: MiniGPT4
+### Preparation
 
+**1. Prepare the code and the environment**
 
+Git clone our repository, create a Python environment and activate it via the following command
 
+```bash
+git clone git@github.com:liguang0115/Oxford_HIC.git
+cd Oxford_HIC/minigpt4
+conda env create -f environment.yml
+conda activate minigpt4
+```
+
+### Launching demo locally
+
+**1. Modify the config file**
+
+Put the downloaded weight in the directory: MODEL_PATH
+
+minigpt4/eval_configs/minigpt4_eval.yaml
+
+```
+model:
+  arch: mini_gpt4
+  model_type: pretrain_vicuna
+  freeze_vit: True
+  freeze_qformer: True
+  max_txt_len: 160
+  end_sym: "###"
+  low_resource: True
+  prompt_path: "prompts/alignment.txt"
+  prompt_template: '###Human: {} ###Assistant: '
+  ckpt: 'downloaded_weight_path'
+```
 
 
 ## Model: CLIPCap
@@ -108,6 +139,8 @@ Train the model with a distributed system on your machine by running
 torchrun --nproc_per_node=NUM_GPUS train.py --data YOUR_DATA_SAVE_DIR --out_dir CKPT_OUTPUT_DIR --epochs EPOCH --bs BATCH_SIZE --lr LR
 ```
 CKPT_OUTPUT_DIR: the directory to save your model weights
+
 BATCH_SIZE: the batch size of data for training 
+
 LR: the initial learning rate after warm-up
 
