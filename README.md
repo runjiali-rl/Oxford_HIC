@@ -41,7 +41,7 @@ Download the pre-trained checkpoints on MiniGPT4 and CLIPCap
  [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1lwI3T81QtbVtIcJ7jsRxdxBI1bh_4wy7/view?usp=sharing) 
 
 
-We recommend trying MiniGPT4 first since it has quite a strong abstract understanding ability derived from its Large Language Model decoder (Vicuna), which facilitates humour generation and understanding.
+We recommend trying MiniGPT4 first since it has quite a strong abstract understanding ability derived from its Large Language Model decoder (Vicuna), which facilitates humour generation and understanding. Suppose you download the pth file in the path MODEL_DIR
 
 ## Model: MiniGPT4
 ### Preparation
@@ -58,26 +58,39 @@ conda activate minigpt4
 ```
 
 ### Launching demo locally
+**1. Prepare the pre-trained Vicuna weights**
+Download the pre-trained checkpoints according to the Vicuna model you prepare.
 
-**1. Modify the config file**
-
-Put the downloaded weight in the directory: MODEL_PATH
-
-minigpt4/eval_configs/minigpt4_eval.yaml
+|                                Checkpoint Aligned with Vicuna 13B                                |                               Checkpoint Aligned with Vicuna 7B                                |
+:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:
+ [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) 
+ 
+The humour generator of MiniGPT-4 is built on the v0 version of Vicuna-7B.
+Please refer to our instruction [here](PrepareVicuna.md) 
+to prepare the Vicuna weights.
+The final weights would be in a single folder in a structure similar to the following:
 
 ```
-model:
-  arch: mini_gpt4
-  model_type: pretrain_vicuna
-  freeze_vit: True
-  freeze_qformer: True
-  max_txt_len: 160
-  end_sym: "###"
-  low_resource: True
-  prompt_path: "prompts/alignment.txt"
-  prompt_template: '###Human: {} ###Assistant: '
-  ckpt: 'downloaded_weight_path'
+vicuna_weights
+├── config.json
+├── generation_config.json
+├── pytorch_model.bin.index.json
+├── pytorch_model-00001-of-00003.bin
+...   
 ```
+
+Then, set the path to the vicuna weight in the model config file 
+[here](minigpt4/configs/models/minigpt4.yaml#L16) at Line 16.
+
+
+**3. Prepare the pre-trained MiniGPT-4 checkpoint**
+
+
+
+
+Then, set the path to the pre-trained checkpoint: MODEL_DIR in the evaluation config file 
+in [eval_configs/minigpt4_eval.yaml](eval_configs/minigpt4_eval.yaml#L10) at Line 11. 
+
 
 
 ## Model: CLIPCap
