@@ -59,6 +59,7 @@ conda activate minigpt4
 
 ### Launching demo locally
 **1. Prepare the pre-trained Vicuna weights**
+
 Download the pre-trained checkpoints according to the Vicuna model you prepare.
 
 |                                Checkpoint Aligned with Vicuna 13B                                |                               Checkpoint Aligned with Vicuna 7B                                |
@@ -90,9 +91,9 @@ Then, set the path to the pre-trained checkpoint: MODEL_DIR in the evaluation co
 in [minigpt4/eval_configs/minigpt4_eval.yaml](minigpt4/eval_configs/minigpt4_eval.yaml#L10) at Line 11. 
 
 
-**2. Launching demo**
+**3. Launching demo**
 
-Try out our demo [minigpt4/demo.py](minigpt4/demo.py) on your local machine by running
+Try out the demo [minigpt4/demo.py](minigpt4/demo.py) on your local machine by running
 
 ```
 python demo.py --cfg-path eval_configs/minigpt4_eval.yaml  --gpu-id 0
@@ -102,12 +103,15 @@ python demo.py --cfg-path eval_configs/minigpt4_eval.yaml  --gpu-id 0
 The training of MiniGPT-4 contains two alignment stages.
 
 **1. Download pretraining weight**
+
 We directly use the pre-training weight from the original MiniGPT4 repository
 which could be downloaded from
 [here (13B)](https://drive.google.com/file/d/1u9FRRBB3VovP1HxCAlpD9Lw4t4P6-Yq8/view?usp=share_link) or [here (7B)](https://drive.google.com/file/d/1HihQtCEXUyBM1i9DQbaK934wW3TZi-h5/view?usp=share_link).
 
+**2. Process the Oxford HIC dataset**
 
-**2. Humour finetuning stage**
+
+**3. Humour finetuning stage**
 
 In the second stage, we use a small high-quality image-text pair dataset created by ourselves
 and convert it to a conversation format to further align MiniGPT-4.
@@ -161,7 +165,7 @@ or if you want to use a prompt P, run:
 python inference.py --model_path MODEL_PATH --image_path IMAGE_PATH --prompt P
 ```
 
-### Training the model
+### Training
 
 
 **1. Process the Oxford HIC dataset**
