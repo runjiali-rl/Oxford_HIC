@@ -126,7 +126,7 @@ CLIPCap encodes images with CLIP and saves visual features to speed up training.
 Put the downloaded data in the directory YOUR_RAW_DATA_PATH, and specify the output directory YOUR_DATA_SAVE_DIR for processed data. Then run:
 
 ```
-python clipcap/parse_humor.py --data_path YOUR_RAW_DATA_PATH --output_dir YOUR_DATA_SAVE_DIR --use_cuda
+python parse_humor.py --data_path YOUR_RAW_DATA_PATH --output_dir YOUR_DATA_SAVE_DIR --use_cuda
 ```
 
 The output processed dataset will be in a pkl file.
