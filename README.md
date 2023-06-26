@@ -66,7 +66,7 @@ Download the pre-trained checkpoints according to the Vicuna model you prepare.
  [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) 
  
 The humour generator of MiniGPT-4 is built on the v0 version of Vicuna-7B.
-Please refer to our instruction [here](PrepareVicuna.md) 
+Please refer to the instruction [here](https://github.com/Vision-CAIR/MiniGPT-4/blob/main/PrepareVicuna.md) 
 to prepare the Vicuna weights.
 The final weights would be in a single folder in a structure similar to the following:
 
@@ -90,7 +90,7 @@ Then, set the path to the pre-trained checkpoint: MODEL_DIR in the evaluation co
 in [minigpt4/eval_configs/minigpt4_eval.yaml](minigpt4/eval_configs/minigpt4_eval.yaml#L10) at Line 11. 
 
 
-### Launching Demo Locally
+**2. Launching demo**
 
 Try out our demo [minigpt4/demo.py](minigpt4/demo.py) on your local machine by running
 
@@ -102,30 +102,16 @@ python demo.py --cfg-path eval_configs/minigpt4_eval.yaml  --gpu-id 0
 The training of MiniGPT-4 contains two alignment stages.
 
 **1. Download pretraining weight**
-
-In the first pretrained stage, the model is trained using image-text pairs from Laion and CC datasets
-to align the vision and language model. To download and prepare the datasets, please check 
-our [first stage dataset preparation instruction](dataset/README_1_STAGE.md). 
-After the first stage, the visual features are mapped and can be understood by the language
-model.
-To launch the first stage training, run the following command. In our experiments, we use 4 A100. 
-You can change the save path in the config file 
-[train_configs/minigpt4_stage1_pretrain.yaml](train_configs/minigpt4_stage1_pretrain.yaml)
-
-```bash
-torchrun --nproc-per-node NUM_GPU train.py --cfg-path train_configs/minigpt4_stage1_pretrain.yaml
-```
-
-A MiniGPT-4 checkpoint with only stage one training can be downloaded 
+We directly use the pre-training weight from the original MiniGPT4 repository
+which could be downloaded from
 [here (13B)](https://drive.google.com/file/d/1u9FRRBB3VovP1HxCAlpD9Lw4t4P6-Yq8/view?usp=share_link) or [here (7B)](https://drive.google.com/file/d/1HihQtCEXUyBM1i9DQbaK934wW3TZi-h5/view?usp=share_link).
-Compared to the model after stage two, this checkpoint generate incomplete and repeated sentences frequently.
 
 
-**2. Second finetuning stage**
+**2. Humour finetuning stage**
 
-In the second stage, we use a small high quality image-text pair dataset created by ourselves
+In the second stage, we use a small high-quality image-text pair dataset created by ourselves
 and convert it to a conversation format to further align MiniGPT-4.
-To download and prepare our second stage dataset, please check our 
+To download and prepare our second-stage dataset, please check our 
 [second stage dataset preparation instruction](dataset/README_2_STAGE.md).
 To launch the second stage alignment, 
 first specify the path to the checkpoint file trained in stage 1 in 
