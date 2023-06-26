@@ -67,7 +67,7 @@ Download the pre-trained checkpoints according to the Vicuna model you prepare.
  [Downlad](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link) | [Download](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) 
  
 The humour generator of MiniGPT-4 is built on the v0 version of Vicuna-7B.
-Please refer to the instruction [here](https://github.com/Vision-CAIR/MiniGPT-4/blob/main/PrepareVicuna.md) 
+Please refer to the instruction [here](minigpt4/PrepareVicuna.md) 
 to prepare the Vicuna weights.
 The final weights would be in a single folder in a structure similar to the following:
 
