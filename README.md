@@ -1,20 +1,8 @@
-# Oxford_HIC
+# OxfordTVG-HIC
 [![arXiv](https://img.shields.io/badge/arXiv-2307.11636-b31b1b.svg?style=flat)](https://arxiv.org/abs/2307.11636)
 
-
-## Online Demo
-
-Click the image to chat with models trained on Oxford HIC around your images
-[![demo](figs/online_demo.png)](https://minigpt-4.github.io)
-
-
-## Examples
-  |   |   |
-:-------------------------:|:-------------------------:
-![find wild](figs/examples/wop_2.png) |  ![write story](figs/examples/ad_2.png)
-![solve problem](figs/examples/fix_1.png)  |  ![write Poem](figs/examples/rhyme_1.png)
-
-
+## Dataset Exploration
+TODO
 
 ## Introduction
 This paper presents Oxford HIC, a large-scale dataset for humour generation and understanding. Humour is an abstract, subjective, and context-dependent cognitive construct involving several cognitive factors, making it a challenging task to generate and interpret. Hence, humour generation and understanding can serve as a new task for evaluating the ability of deep-learning methods to process abstract and subjective information.
