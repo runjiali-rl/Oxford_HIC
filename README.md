@@ -1,7 +1,5 @@
 # Oxford_HIC
-[![arXiv](https://img.shields.io/badge/arXiv-1234.56789-b31b1b.svg?style=flat)](https://arxiv.org/abs/1234.56789)
-
-Coming Soon
+[![arXiv](https://img.shields.io/badge/arXiv-2307.11636-b31b1b.svg?style=flat)](https://arxiv.org/abs/2307.11636)
 
 
 ## Online Demo
