@@ -2,7 +2,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2307.11636-b31b1b.svg?style=flat)](https://arxiv.org/abs/2307.11636)
 
 ## Dataset Exploration
-TODO
+![data sample](doc/dataset_sample_demo.png) 
 
 ## Introduction
 This paper presents Oxford HIC, a large-scale dataset for humour generation and understanding. Humour is an abstract, subjective, and context-dependent cognitive construct involving several cognitive factors, making it a challenging task to generate and interpret. Hence, humour generation and understanding can serve as a new task for evaluating the ability of deep-learning methods to process abstract and subjective information.
@@ -17,7 +17,7 @@ Through explainability analysis of the trained models, we identify the visual an
 
 ## Dataset download
 Download the dataset from [Oxford_HIC](https://drive.google.com/drive/folders/1BDuUcMeaWrFD8TwgHLhFPkuAwmoHaVNQ) 
-Or directly running the follong scripts to download meta-data and images simultianeously (make sure you have [Gdown](https://github.com/wkentaro/gdown) in your environment). 
+or directly running the follong scripts to download meta-data and images simultianeously (make sure you have [Gdown](https://github.com/wkentaro/gdown) in your environment). 
 
 ```
 cd data
