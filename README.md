@@ -38,6 +38,9 @@ Download the pre-trained checkpoints on MiniGPT4 and CLIPCap
 
 We recommend trying MiniGPT4 first since it has quite a strong abstract understanding ability derived from its Large Language Model decoder (Vicuna), which facilitates humour generation and understanding. Suppose you download the pth file in the path MODEL_DIR
 
+For specifically how to use the models please refer to
+[CLIPCAP.md](clipcap/CLIPCAP.md) and [MINIGPT-4.md](minigpt4/MINIGPT-4.md) for further details
+
 
 ## Citing
 
