@@ -13,7 +13,6 @@ We also show how Oxford HIC can be leveraged for evaluating the humour of a gene
 Through explainability analysis of the trained models, we identify the visual and linguistic cues influential for evoking humour prediction (and generation). We observe qualitatively that these cues are aligned with the benign violation theory of humour in cognitive psychology.
 
 
-![overview](figs/overview.png)
 
 ## Dataset download
 Download the dataset from [Oxford_HIC](https://drive.google.com/drive/folders/1BDuUcMeaWrFD8TwgHLhFPkuAwmoHaVNQ) 
