@@ -2,7 +2,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2307.11636-b31b1b.svg?style=flat)](https://arxiv.org/abs/2307.11636)
 
 ## Dataset Exploration
-![data sample](doc/dataset_sample_demo.png) 
+![data sample](doc/hic_data_demo.jpg) 
 
 ## Introduction
 This paper presents Oxford HIC, a large-scale dataset for humour generation and understanding. Humour is an abstract, subjective, and context-dependent cognitive construct involving several cognitive factors, making it a challenging task to generate and interpret. Hence, humour generation and understanding can serve as a new task for evaluating the ability of deep-learning methods to process abstract and subjective information.
@@ -39,5 +39,21 @@ Download the pre-trained checkpoints on MiniGPT4 and CLIPCap
 
 We recommend trying MiniGPT4 first since it has quite a strong abstract understanding ability derived from its Large Language Model decoder (Vicuna), which facilitates humour generation and understanding. Suppose you download the pth file in the path MODEL_DIR
 
+
+## Citing
+
+If you found this repository useful, please consider citing:
+
+```bibtex
+@misc{li2023oxfordtvghic,
+      title={OxfordTVG-HIC: Can Machine Make Humorous Captions from Images?}, 
+      author={Runjia Li and Shuyang Sun and Mohamed Elhoseiny and Philip Torr},
+      year={2023},
+      eprint={2307.11636},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+```
 
 
