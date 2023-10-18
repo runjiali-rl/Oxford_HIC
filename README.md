@@ -24,7 +24,7 @@ or directly running the following scripts to download meta-data and images simul
 
 ```
 cd data
-bash data_download_data.sh
+bash download_data.sh
 ```
 
 This will automatically downlod images and captions to data/hic_data
