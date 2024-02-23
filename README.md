@@ -28,7 +28,7 @@ This will automatically downlod images and captions to data/hic_data
 
 
 
-## Demo weight download
+<!-- ## Demo weight download -->
 There are some problems with the weight. We will fix the issue soon.
 <!-- Download the pre-trained checkpoints on MiniGPT4 and CLIPCap
 
