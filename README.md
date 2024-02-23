@@ -1,6 +1,10 @@
 # OxfordTVG-HIC
 [![arXiv](https://img.shields.io/badge/arXiv-2307.11636-b31b1b.svg?style=flat)](https://arxiv.org/abs/2307.11636)
 
+This repo holds the implementation code and pre-trained weights for the following paper:
+
+Runjia Li*, Shuyang Sun*, Mohamed Elhoseiny and Philip Torr, [OxfordTVG-HIC: Can Machine Make Humorous Captions from Images?](https://openaccess.thecvf.com/content/ICCV2023/papers/Li_OxfordTVG-HIC_Can_Machine_Make_Humorous_Captions_from_Images_ICCV_2023_paper.pdf) Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 2023.
+
 ## Dataset Exploration
 ![data sample](doc/hic_data_demo.jpg) 
 
@@ -16,11 +20,11 @@ Through explainability analysis of the trained models, we identify the visual an
 
 ## Dataset download
 Download the dataset from [Oxford_HIC](https://drive.google.com/drive/folders/1BDuUcMeaWrFD8TwgHLhFPkuAwmoHaVNQ) 
-or directly running the follong scripts to download meta-data and images simultianeously (make sure you have [Gdown](https://github.com/wkentaro/gdown) in your environment). 
+or directly running the following scripts to download meta-data and images simultaneously (make sure you have [Gdown](https://github.com/wkentaro/gdown) in your environment). 
 
 ```
 cd data
-bash data_download_data.sh
+bash download_data.sh
 ```
 
 This will automatically downlod images and captions to data/hic_data
@@ -48,13 +52,13 @@ For specifically how to use the models please refer to
 If you found this repository useful, please consider citing:
 
 ```bibtex
-@misc{li2023oxfordtvghic,
-      title={OxfordTVG-HIC: Can Machine Make Humorous Captions from Images?}, 
-      author={Runjia Li and Shuyang Sun and Mohamed Elhoseiny and Philip Torr},
-      year={2023},
-      eprint={2307.11636},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@InProceedings{Li_2023_ICCV,
+    author    = {Li, Runjia and Sun, Shuyang and Elhoseiny, Mohamed and Torr, Philip},
+    title     = {OxfordTVG-HIC: Can Machine Make Humorous Captions from Images?},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2023},
+    pages     = {20293-20303}
 }
 
 ```
